@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-Time GPS Tracking with GeoJSON</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"
+    />
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <script>
+      let map = L.map("map").setView([26.769464, 81.095838], 12);
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      let marker = L.marker([26.769464, 81.095838])
+        .addTo(map)
+        .bindPopup("Coordinates: [26.769464, 81.095838]")
+        .openPopup();
+
+      function fetchCoordinates() {
+        fetch("/coordinates")
+          .then((response) => {
+            if (!response.ok) {
+              console.error("Error fetching coordinates");
+              return;
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const latLng = [data.latitude, data.longitude];
+            marker
+              .setLatLng(latLng)
+              .getPopup()
+              .setContent(`Coordinates: [${data.latitude}, ${data.longitude}] \n distance_travelled_on_toll_road: ${data.distance}`)
+              .openOn(map);
+            map.setView(latLng);
+          })
+          .catch((error) => {
+            console.error("Error fetching coordinates:", error);
+          });
+
+        setTimeout(fetchCoordinates, 1000);
+      }
+
+      fetchCoordinates();
+
+      function getColor(price) {
+        return price > 3
+          ? "#800026"
+          : price > 2
+          ? "#BD0026"
+          : price > 1
+          ? "#E31A1C"
+          : "#FFEDA0";
+      }
+
+      function geo_json_style(feature) {
+        return {
+          fillColor: getColor(feature.properties.price),
+          weight: 2,
+          opacity: 1,
+          color: "white",
+          dashArray: "3",
+          fillOpacity: 0.4,
+        };
+      }
+
+      function geo_json_onEachFeature(feature, layer) {
+        layer.on({});
+      }
+
+      let geo_json = L.geoJson(null, {
+        style: geo_json_style,
+        onEachFeature: geo_json_onEachFeature,
+      });
+
+      function geo_json_add(data) {
+        geo_json.addData(data);
+      }
+
+      geo_json_add({
+        bbox: [80.765365, 26.603312, 81.215365, 26.803312],
+        features: [
+          {
+            bbox: [80.765365, 26.603312, 80.915365, 26.803312],
+            geometry: {
+              coordinates: [
+                [
+                  [80.765365, 26.803312],
+                  [80.765365, 26.603312],
+                  [80.915365, 26.603312],
+                  [80.915365, 26.803312],
+                  [80.765365, 26.803312],
+                ],
+              ],
+              type: "Polygon",
+            },
+            id: "0",
+            properties: { price: 2.3 },
+            type: "Feature",
+          },
+          {
+            bbox: [80.915365, 26.603312, 81.065365, 26.803312],
+            geometry: {
+              coordinates: [
+                [
+                  [80.915365, 26.803312],
+                  [80.915365, 26.603312],
+                  [81.065365, 26.603312],
+                  [81.065365, 26.803312],
+                  [80.915365, 26.803312],
+                ],
+              ],
+              type: "Polygon",
+            },
+            id: "1",
+            properties: { price: 1.7 },
+            type: "Feature",
+          },
+          {
+            bbox: [81.065365, 26.603312, 81.215365, 26.803312],
+            geometry: {
+              coordinates: [
+                [
+                  [81.065365, 26.803312],
+                  [81.065365, 26.603312],
+                  [81.215365, 26.603312],
+                  [81.215365, 26.803312],
+                  [81.065365, 26.803312],
+                ],
+              ],
+              type: "Polygon",
+            },
+            id: "2",
+            properties: { price: 3.2 },
+            type: "Feature",
+          },
+        ],
+        type: "FeatureCollection",
+      });
+
+      geo_json.addTo(map);
+    </script>
+  </body>
+</html>
