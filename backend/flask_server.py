@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
-from backend.database import org,tollZones,nationalHighways as NH
-from backend.database import mongo_manager as MM
+from database import org,tollZones,nationalHighways as NH # type: ignore
+from database import mongo_manager as MM # type: ignore
 
 import logging
 log = logging.getLogger('werkzeug')
