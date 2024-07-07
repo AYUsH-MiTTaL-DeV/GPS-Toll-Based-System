@@ -1,4 +1,4 @@
-from backend.class_defination import Organizer
+from class_defination import Organizer # type: ignore
 
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
