@@ -23,11 +23,11 @@ This project is a vehicle toll tracking system that uses GPS coordinates to dete
 ## Installation
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/GPS_Toll_Collection_System.git
+    git clone https://github.com/AYUsH-MiTTaL-DeV/GPS-Toll-Based-System
     ```
 2. Navigate to the project directory:
     ```bash
-    cd vehicle-toll-tracking
+    cd GPS-Toll-Based-System
     ```
 3. Create and activate a virtual environment:
     ```bash
@@ -36,20 +36,17 @@ This project is a vehicle toll tracking system that uses GPS coordinates to dete
     ```
 4. Install the required packages:
     ```bash
-    pip install Flask GeoPandas Requests Shapely
+    pip install Flask GeoPandas Requests Shapely pymongo 
     ```
-5. Unzip the zip file present in geo_data folder:
-   use winrar or any other unzipping app
-
+5. Unzip the zip file present in backend/geo_data folder:
+    ```
+    1.Use winrar or any other unzipping app
+    2.Copy the geojson file from the unziped folder to the backend/geo_data directory i.e in the parent folder
+    ```
 ## Usage
-### Navigate to the directory:
-    cd GPS_Coordinate_Sender
-
-### Run the Application.py script:
-    python Application.py
+### Navigate to the Base directory of Project:
+### Run the App.py script:
+    python App.py
 
 ### On any browser:
     localhost:4000
-
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request.
