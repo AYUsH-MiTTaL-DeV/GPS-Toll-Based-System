@@ -45,8 +45,18 @@ This project is a vehicle toll tracking system that uses GPS coordinates to dete
     ```
 ## Usage
 ### Navigate to the Base directory of Project:
-### Run the App.py script:
-    python App.py
 
-### On any browser:
-    localhost:4000
+### if using virtual environment:
+###     Run the App.py script:
+            python App.py
+
+###     On any browser:
+            localhost:4000
+            
+### if not using virtual environment:
+### run the frontend.py 
+            python frontend/frontend.py
+### run flask_server.py
+            python backend/flask_server.py
+### run the GPS.py
+            python GPS/GPS.py
