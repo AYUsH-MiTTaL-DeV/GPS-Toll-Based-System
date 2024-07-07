@@ -36,7 +36,7 @@ This project is a vehicle toll tracking system that uses GPS coordinates to dete
     ```
 4. Install the required packages:
     ```bash
-    pip install Flask GeoPandas Requests Shapely pymongo 
+    pip install Flask GeoPandas Requests Shapely pymongo cryptography
     ```
 5. Unzip the zip file present in backend/geo_data folder:
     ```
