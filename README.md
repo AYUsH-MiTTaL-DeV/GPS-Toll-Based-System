@@ -53,7 +53,7 @@ This project is a vehicle toll tracking system that uses GPS coordinates to dete
 ### On any browser:
         localhost:4000
 
-### --------------------------------------------------------------------------------------------------------------------
+### ---------------------------------------------------------------------------------------------------------------------------
             
 ### 2.if not using virtual environment:
 ### run the frontend.py 
